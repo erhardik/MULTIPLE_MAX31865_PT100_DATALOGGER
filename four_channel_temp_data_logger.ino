@@ -2,21 +2,24 @@
 #include "SPI.h"
 
 // use hardware SPI, just pass in the CS pin
-Adafruit_MAX31865 max_1 = Adafruit_MAX31865(10);
-Adafruit_MAX31865 max_2 = Adafruit_MAX31865(9);
-Adafruit_MAX31865 max_3 = Adafruit_MAX31865(8);
-Adafruit_MAX31865 max_4 = Adafruit_MAX31865(7);
+Adafruit_MAX31865 max_1 = Adafruit_MAX31865(10); // for first PT100 module
+Adafruit_MAX31865 max_2 = Adafruit_MAX31865(9);  // for second PT100 module
+Adafruit_MAX31865 max_3 = Adafruit_MAX31865(8);  // for third PT100 module
+Adafruit_MAX31865 max_4 = Adafruit_MAX31865(7);  // for fourth PT100 module
 
-// The value of the Rref resistor. Use 430.0!
-#define RREF 430.0
+// Use software SPI: CS, DI, DO, CLK
+Adafruit_MAX31865 thermo = Adafruit_MAX31865(10, 11, 12, 13); // for single module use this otherwise delete this lines
+
+// The value of the Rref resistor. Use 430.0 for PT100 & Use 4300 for PT1000! 
+#define RREF 430.0       
 
 // The 'nominal' 0-degrees-C resistance of the sensor
 // 100.0 for PT100, 1000.0 for PT1000
 #define RNOMINAL  100.0
 
 void setup() {
-  Serial.begin(115200);
-  Serial.println("4 Channel Datalogger Start");
+  Serial.begin(115200);      // select same in serial monitor
+  Serial.println("4 Channel Datalogger Start");  // inital messsage
   SPI.begin();
   max_1.begin(MAX31865_3WIRE);  // set to 2WIRE or 4WIRE as necessary
   max_2.begin(MAX31865_3WIRE); // set to 2WIRE or 4WIRE as necessary
@@ -151,6 +154,6 @@ void loop() {
     }
     max_4.clearFault();
   }
-  Serial.println();
-  delay(5000);
+  Serial.println();  // create one blank line before new logging
+  delay(5000);      // set as per your data logging need, 5000 = at every 5 sec data will be pulled
 }
