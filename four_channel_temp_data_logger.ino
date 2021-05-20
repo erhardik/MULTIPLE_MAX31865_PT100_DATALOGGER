@@ -20,6 +20,7 @@ Adafruit_MAX31865 thermo = Adafruit_MAX31865(10, 11, 12, 13); // for single modu
 void setup() {
   Serial.begin(115200);      // select same in serial monitor
   Serial.println("4 Channel Datalogger Start");  // inital messsage
+  Serial.println("Find more at https://github.com/erhardik/iot");  // inital messsage
   SPI.begin();
   max_1.begin(MAX31865_3WIRE);  // set to 2WIRE or 4WIRE as necessary
   max_2.begin(MAX31865_3WIRE); // set to 2WIRE or 4WIRE as necessary
